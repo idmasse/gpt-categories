@@ -19,7 +19,7 @@ with open('additional_info.json', 'r') as h:
 def categorize_products(title, description, product_url):
     response = gptclient.chat.completions.create(
         model="gpt-4o",
-        temperature=0.5,
+        temperature=0.3,
         top_p=1,
         messages=[
             {
