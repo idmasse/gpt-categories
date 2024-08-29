@@ -61,7 +61,7 @@ def categorize_products(title, description, product_url):
 
 title = "Reclining Camp Chair"
 description = """ Plush, portable, and packable, the Picnic Time Reclining Camp Chair is your camping cockpit with three reclining positions, an extra-wide, padded polyester seat and armrests, and much more. """
-product_url = "https://www.picnictime.com/"
+product_url = "https://www.picnictime.com/products/reclining-camp-chair"
 
 categorized = categorize_products(title, description, product_url)
 
