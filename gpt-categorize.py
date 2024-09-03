@@ -6,8 +6,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-gptclient = OpenAI(api_key=os.getenv('API_KEY'))
+gptclient = OpenAI(api_key=os.getenv('API_KEY')) # initialize gpt client
 
+# load categories, attributes, additional info files
 with open('categories.json', 'r') as f:
     categories = json.load(f)
 
@@ -17,6 +18,7 @@ with open('attribute_data.json', 'r') as g:
 with open('additional_info.json', 'r') as h:
     additional_info = json.load(h)
 
+# prompt gpt
 def categorize_products(product_info):
     response = gptclient.chat.completions.create(
         model="gpt-4o",
@@ -55,29 +57,28 @@ def categorize_products(product_info):
     
     return response.choices[0].message.content.strip()
 
-# Specify the folder containing the product_info files
+# specify the folder containing the product_info files
 input_folder_path = 'split_json_missing'
-# Specify the folder to save the results
+# specify the folder to save the results
 output_folder_path = 'refinery-gpt-results2'
 
-# Ensure the output folder exists
+# ensure the output folder exists
 os.makedirs(output_folder_path, exist_ok=True)
 
-# Loop through all files in the input folder
+# loop through all files in the input folder
 for filename in os.listdir(input_folder_path):
-    if filename.endswith('.json'):  # Check if the file is a JSON file
+    if filename.endswith('.json'):  # check if the file is a JSON file
         input_file_path = os.path.join(input_folder_path, filename)
         with open(input_file_path, 'r') as f:
             product_info = json.load(f)
         
         categorized = categorize_products(product_info)
         
-        # Define the output file path
+        # define the output file path & append filenames
         output_file_path = os.path.join(output_folder_path, f"gpt_{filename}")
         
-        # Write the raw response to the output file
+        # write the response to the output file
         with open(output_file_path, 'w') as out_f:
             out_f.write(categorized)
         
         print(f"Processed {filename}, result saved to {output_file_path}")
-        time.sleep(5)
