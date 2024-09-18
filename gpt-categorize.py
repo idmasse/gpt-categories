@@ -24,20 +24,11 @@ def categorize_products(product_info):
             {   
                 "role":"user",
                 "content":f"""
-                I have a strict list of categories and sub-categories. Use them to categorize the products.
-                I also have a strict list of additional info, use it to find any additional information about the product. 
-                
-                Categories and sub-categories are:
-                {categories}
-
-                Additional Information:
-                {additional_info}
-
                 Instructions:
+                - I have a strict list of categories and sub-categories {categories}. Use them explicitly to categorize the products. Each object represents a set of categories. Only choose from the listed categories and sub-categories. 
+                - I also have a strict list of additional info {additional_info}, use it to find as many relevant pieces of additional information about the product as possible. Only choose from the listed additional info, at the very least about and material are mandatory. 
                 - Format response as a list of dicts in JSON. Do not include ```JSON in the response.
                 - These are the products you are categorizing: {product_info}
-                - Only choose from the listed categories and sub-categories.
-                - Only choose from the listed additional info. 
                 """
             }
         ]
@@ -46,9 +37,9 @@ def categorize_products(product_info):
     return response.choices[0].message.content.strip()
 
 # specify the folder containing the product_info files
-input_folder_path = ''
+input_folder_path = 'refinery-no-1/refinery-split-missing'
 # specify the folder to save the results
-output_folder_path = ''
+output_folder_path = 'refinery-no-1/refinery-missing-gpt-results'
 
 # ensure the output folder exists
 os.makedirs(output_folder_path, exist_ok=True)
